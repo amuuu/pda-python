@@ -20,7 +20,7 @@ def read_grammars():
                     rules[new_rule[0]].append(new_rule[1])
 
 def get_expression_input():
-    input_chars = input("Enter the expression: ").split(" ")
+    input_chars = input("Enter the expression: ").split(" ")[::-1]
     for char in input_chars:
         expressions.append(char)
     
@@ -28,7 +28,6 @@ def check_expression(stack, expression):
     # no go situations
     if len(stack) > len(expression) or \
         (len(stack) == 0 and len(expression) > 0):
-        print("1")
         return False
 
     stack_pointer = stack.pop()
@@ -37,23 +36,24 @@ def check_expression(stack, expression):
     if stack_pointer == expression[-1]:
         expression.pop()
         if len(stack) == 0 and len(expression) == 0:
-            print("0")
-            return True
+            print("ACCEPT YAY")
+            exit()
         check_expression(copy.deepcopy(stack), copy.deepcopy(expression))
     
     # check if we have a symbol that's not in the grammar
     if stack_pointer not in rules:
         return False
     
+    # save the productions for 
     for rule in rules:
         if rule==stack_pointer:
-            stack_rules = rules[rule]
+            stack_prods = rules[rule]
             break
     
-    for production in stack_rules:
+    for production in stack_prods:
+        
         tmp_stack = copy.deepcopy(stack)
-        for inner_item in production:
-            print(inner_item)
+        for inner_item in production.split(" ")[::-1]:
             tmp_stack.append(inner_item)
         check_expression(tmp_stack, copy.deepcopy(expression))
 
@@ -61,14 +61,13 @@ read_grammars()
 get_expression_input()
 stack.append(next(iter(rules)))
 
-print("##########")
-print(rules)
-print(expressions)
+print("\n#####################\n")
+print("RULES:", rules)
+print("INPUT:", expressions)
+print("\n#####################\n")
 
-if check_expression(stack,expressions): # the main function
-    print("SUCCESSSSSSSS")
-else:
-    print("FAAAAAAAAIL")
+if not check_expression(stack, expressions): # the main function
+    print("FAIL")
 
 
 

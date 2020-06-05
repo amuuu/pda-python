@@ -1,8 +1,5 @@
 {
     "grammars":{
-
-    },
-    "expressions":{
-        
+        "1":["A->aA,R","A->b,L"]
     }
 }

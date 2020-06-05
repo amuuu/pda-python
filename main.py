@@ -20,7 +20,7 @@ def read_grammars():
                     rules[new_rule[0]].append(new_rule[1])
 
 def get_expression_input():
-    input_chars = input("Enter the expression: ").split(" ")[::-1]
+    input_chars = input("Enter the expression: ").split(" ")
     for char in input_chars:
         expressions.append(char)
     
@@ -51,9 +51,8 @@ def check_expression(stack, expression):
             break
     
     for production in stack_prods:
-        
         tmp_stack = copy.deepcopy(stack)
-        for inner_item in production.split(" ")[::-1]:
+        for inner_item in production.split(" "):
             tmp_stack.append(inner_item)
         check_expression(tmp_stack, copy.deepcopy(expression))
 
@@ -66,7 +65,7 @@ print("RULES:", rules)
 print("INPUT:", expressions)
 print("\n#####################\n")
 
-if not check_expression(stack, expressions): # the main function
+if not check_expression(stack, expressions):
     print("FAIL")
 
 

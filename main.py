@@ -12,18 +12,18 @@ def read_grammars():
         # fill the rules list
         for g in data['grammars']:
             for i in range(0, len(data['grammars'][g])): 
-                new_rule = re.findall(r"[\w']+", data['grammars'][g][i]) # turn "A-> aB,R" to "[A,aB,R]"
+                new_rule = re.findall(r"[\w']+", data['grammars'][g][i]) # turn "A-> aB,R" into "[A,aB,R]"
                 if new_rule not in rules:
                     rules.append(new_rule)
 
-def get_inputs():
+def get_expression_input():
     input_chars = input("Enter the expression: ").split(" ")
     for char in input_chars:
         expressions.append(char)
     
 
 read_grammars()
-get_inputs()
+get_expression_input()
 
 print("##########")
 

@@ -25,6 +25,7 @@ def get_expression_input():
         expressions.append(char)
     
 def check_expression(stack, expression):
+    
     # no go situations
     if len(stack) > len(expression) or \
         (len(stack) == 0 and len(expression) > 0):
@@ -34,17 +35,18 @@ def check_expression(stack, expression):
     
     # if we reached the last character of the input string
     if stack_pointer == expression[-1]:
-        expression.pop()
+        exp = expression.pop()
         if len(stack) == 0 and len(expression) == 0:
-            print("ACCEPT YAY")
+            print("\nACCEPT YAY\n")
             exit()
+
         check_expression(copy.deepcopy(stack), copy.deepcopy(expression))
     
     # check if we have a symbol that's not in the grammar
     if stack_pointer not in rules:
         return False
-    
-    # save the productions for 
+
+    # save the productions for the current variable
     for rule in rules:
         if rule==stack_pointer:
             stack_prods = rules[rule]
@@ -54,6 +56,7 @@ def check_expression(stack, expression):
         tmp_stack = copy.deepcopy(stack)
         for inner_item in production.split(" "):
             tmp_stack.append(inner_item)
+        
         check_expression(tmp_stack, copy.deepcopy(expression))
 
 read_grammars()

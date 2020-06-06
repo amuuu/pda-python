@@ -37,19 +37,17 @@ def check_expression(stack, expression):
     # no go situations
     if len(stack) > len(expression) or \
         (len(stack) == 0 and len(expression) > 0):
-        actions.pop()
+        actions.pop() # remove the action done from the list of valid actions if it didn't work
         return False
     stack_pointer = stack.pop()
     
     # if we reached the last character of the input string
     if stack_pointer == expression[-1]:
-        exp = expression.pop()
-
+        expression.pop()
         if len(stack) == 0 and len(expression) == 0:
             print("\nACCEPT\n")
             print_actions(actions)
             exit()
-        
         check_expression(copy.deepcopy(stack), copy.deepcopy(expression))
     
     # check if we have a symbol that's not in the grammar
@@ -62,11 +60,12 @@ def check_expression(stack, expression):
             stack_prods = rules[rule]
             break
     
+    # call this function recursively for each production that stack pointer variable has
     for production in stack_prods:
         tmp_stack = copy.deepcopy(stack)
         for inner_item in production.split(" "):
             tmp_stack.append(inner_item)
-        actions.append((stack_pointer,"->", production))
+        actions.append((stack_pointer,"->", production)) # add every action that we do (the ones that don't work will be poped.)
         check_expression(tmp_stack, copy.deepcopy(expression))
 
 grammar_no = input_grammar_number()

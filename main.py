@@ -41,6 +41,9 @@ def check_expression(stack, expression):
         actions.pop() # remove the action done from the list of valid actions if it didn't work
         return False
     stack_pointer = stack.pop()
+    print("STACK:")
+    print("top:", stack_pointer)
+    print("others:", stack)
     
     # if we reached the last character of the input string
     if stack_pointer == expression[-1]:

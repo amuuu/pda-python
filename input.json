@@ -9,7 +9,7 @@
              "S -> c S a",
              "S -> b S c",
              "S -> c S b",
-             "S -> e"],
+             "S -> f"],
         
         "2":["Q0 -> a Q1",
              "Q0 -> b Q3",
@@ -43,7 +43,22 @@
              "N -> a N b",
              "N -> f"],
         
-        "5":[]
+        "5":["S -> K Z",
+             "K -> a K A",
+             "K -> b K B",
+             "K -> f",
+        
+             "A Z -> X Z",
+             "A X -> X A",
+             "B X -> X B",
+             "a X -> a a",
+             "b X -> b a",
+        
+             "B Z -> Y Z",
+             "A Y -> Y A",
+             "B Y -> Y B",
+             "a Y -> a b",
+             "b Y -> b b"]
         
     }
 }

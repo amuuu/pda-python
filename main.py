@@ -6,6 +6,7 @@ rules = {}
 expressions = []
 stack = []
 grammar_no = 0
+actions = []
 
 def read_grammars(grammar_no):
     with open('input.json') as input_file:
@@ -26,7 +27,9 @@ def input_expression():
         expressions.append(char)
 
 def input_grammar_number():
-    return input("Which grammar would you like to check your expression with (from 1-5): ")
+    print("Which grammar would you like to check your expression with (from 1-4): ")
+    print("(Note that my code is PDA, it doesn't support the 5th grammar which is unrestricted)\n")
+    return input("")
     
     
 def check_expression(stack, expression):
@@ -34,17 +37,19 @@ def check_expression(stack, expression):
     # no go situations
     if len(stack) > len(expression) or \
         (len(stack) == 0 and len(expression) > 0):
+        actions.pop()
         return False
-
     stack_pointer = stack.pop()
     
     # if we reached the last character of the input string
     if stack_pointer == expression[-1]:
         exp = expression.pop()
-        if len(stack) == 0 and len(expression) == 0:
-            print("\nACCEPT YAY\n")
-            exit()
 
+        if len(stack) == 0 and len(expression) == 0:
+            print("\nACCEPT\n")
+            print_actions(actions)
+            exit()
+        
         check_expression(copy.deepcopy(stack), copy.deepcopy(expression))
     
     # check if we have a symbol that's not in the grammar
@@ -61,7 +66,7 @@ def check_expression(stack, expression):
         tmp_stack = copy.deepcopy(stack)
         for inner_item in production.split(" "):
             tmp_stack.append(inner_item)
-        
+        actions.append((stack_pointer,"->", production))
         check_expression(tmp_stack, copy.deepcopy(expression))
 
 grammar_no = input_grammar_number()

@@ -22,9 +22,10 @@ def read_grammars(grammar_no):
                         rules[new_rule[0]].append(new_rule[1])
 
 def input_expression():
-    input_chars = input("Enter the expression: ").split(" ")
-    for char in input_chars:
+    input_chars = input("\nEnter the expression: ")
+    for char in input_chars.split(" "):
         expressions.append(char)
+    return input_chars
 
 def input_grammar_number():
     print("Which grammar would you like to check your expression with (from 1-4): ")
@@ -45,7 +46,9 @@ def check_expression(stack, expression):
     if stack_pointer == expression[-1]:
         expression.pop()
         if len(stack) == 0 and len(expression) == 0:
-            print("\nACCEPT\n")
+            print("\n$$$$$$$$$$$$$$$$$$$$$$")
+            print(  "$$$     ACCEPT     $$$")
+            print(  "$$$$$$$$$$$$$$$$$$$$$$\n")
             print_actions(actions)
             exit()
         check_expression(copy.deepcopy(stack), copy.deepcopy(expression))
@@ -70,13 +73,13 @@ def check_expression(stack, expression):
 
 grammar_no = input_grammar_number()
 read_grammars(grammar_no)
-input_expression()
+input_str = input_expression()
 stack.append(next(iter(rules)))
 
-print("\n#####################\n")
-print("RULES:", rules)
-print("INPUT:", expressions)
-print("\n#####################\n")
+print_grammar(rules)
+print_input(input_str)
 
 if not check_expression(stack, expressions):
-    print("FAIL")
+    print("\n$$$$$$$$$$$$$$$$$$$$$$")
+    print(  "$$$      FAIL      $$$")
+    print(  "$$$$$$$$$$$$$$$$$$$$$$\n")

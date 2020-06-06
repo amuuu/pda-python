@@ -9,7 +9,7 @@ grammar_no = 0
 actions = []
 
 def read_grammars(grammar_no):
-    with open('input.json') as input_file:
+    with open('grammars.json') as input_file:
         data = json.load(input_file)
         # fill the rules list
         for g in data['grammars']:
